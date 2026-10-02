@@ -1,14 +1,22 @@
 FROM php:8.2-apache
 
 # Deshabilitar los MPM incompatibles antes de habilitar el de mod_php.
-RUN a2dismod -f mpm_event mpm_worker \
-    && a2enmod mpm_prefork
+RUN a2dismod -f mpm_event mpm_worker; \
+    rm -f /etc/apache2/mods-enabled/mpm_event.load \
+          /etc/apache2/mods-enabled/mpm_event.conf \
+          /etc/apache2/mods-enabled/mpm_worker.load \
+          /etc/apache2/mods-enabled/mpm_worker.conf; \
+    a2enmod mpm_prefork
 
 # Conservar PDO MySQL y mysqli para la conexión central de las páginas.
 RUN docker-php-ext-install pdo_mysql mysqli
 
 # Copiar el proyecto
 COPY . /var/www/html/
+
+# Corregir los MPM en cada arranque, aunque otro comando de Railway los reactive.
+COPY docker-start.sh /usr/local/bin/railway-start
+RUN chmod +x /usr/local/bin/railway-start
 
 # Permisos
 RUN chown -R www-data:www-data /var/www/html
@@ -27,4 +35,4 @@ RUN set -eu; \
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/usr/local/bin/railway-start"]

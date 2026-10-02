@@ -4,7 +4,7 @@
 
 La imagen usa PHP 8.2 con Apache, `mpm_prefork`, `pdo_mysql` y `mysqli`.
 `mpm_event` y `mpm_worker` se deshabilitan antes de habilitar `mpm_prefork`.
-El proceso de inicio es `apache2-foreground` y Apache escucha en el puerto 80.
+El proceso de inicio prepara Apache y lo ejecuta en foreground en el puerto 80.
 `railway.toml` selecciona el Dockerfile de la raíz y ese comando de inicio.
 
 1. Sube los cambios del Dockerfile a la rama conectada al servicio de Railway.
@@ -14,8 +14,7 @@ El proceso de inicio es `apache2-foreground` y Apache escucha en el puerto 80.
    Confirma también que **Dockerfile Path**, si está configurado, sea `Dockerfile`.
 4. Confirma que Railway lea `/railway.toml` como archivo de configuración.
    En los detalles del despliegue, el constructor debe ser `DOCKERFILE`, la
-   ruta `Dockerfile` y el comando de inicio `apache2-foreground`. No uses un
-   comando que instale Apache, habilite módulos o lo inicie en segundo plano.
+   ruta `Dockerfile` y el comando de inicio `/usr/local/bin/railway-start`.
 5. En **Variables**, configura `PORT=80`. En **Networking**, configura el
    puerto de destino del dominio como `80`.
 6. Configura `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD` y
