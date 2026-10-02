@@ -1,0 +1,4 @@
+.git
+.gitignore
+conexion.local.php
+.env
