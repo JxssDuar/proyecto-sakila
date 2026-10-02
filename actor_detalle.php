@@ -1,21 +1,10 @@
 <?php
-// Configuración de conexión a la base de datos Sakila
-$servername = "localhost";
-$username = "charuser";
-$password = "Usuariochar25@";
-$dbname = "sakila";
-
 // Obtener el ID del actor desde la URL
 $actor_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 try {
     // Crear la conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        throw new Exception("Conexión fallida: " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/conexion.php';
 
     // Consulta para obtener información del actor
     $query_actor = "SELECT first_name, last_name FROM actor WHERE actor_id = ?";

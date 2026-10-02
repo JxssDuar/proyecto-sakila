@@ -4,7 +4,7 @@ FROM php:8.2-apache
 RUN a2dismod -f mpm_event mpm_worker \
     && a2enmod mpm_prefork
 
-# conexion.php usa PDO; las páginas actuales también necesitan mysqli.
+# Conservar PDO MySQL y mysqli para la conexión central de las páginas.
 RUN docker-php-ext-install pdo_mysql mysqli
 
 # Copiar el proyecto

@@ -1,15 +1,6 @@
 <?php
-// Configuración de conexión a la base de datos Sakila
-$servername = "localhost";
-$username = "charuser";
-$password = "Usuariochar25@";
-$dbname = "sakila";
-
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        throw new Exception("Conexión fallida: " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/conexion.php';
 
     // Obtener ID de la renta
     $rental_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

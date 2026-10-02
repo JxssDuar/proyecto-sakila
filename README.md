@@ -18,9 +18,12 @@ El proceso de inicio es `apache2-foreground` y Apache escucha en el puerto 80.
    comando que instale Apache, habilite módulos o lo inicie en segundo plano.
 5. En **Variables**, configura `PORT=80`. En **Networking**, configura el
    puerto de destino del dominio como `80`.
-6. Para `conexion.php`, configura `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`
-   y `DB_NAME` con los datos del servicio MySQL que contiene Sakila. Introduce
-   esos valores únicamente en Railway; no los guardes en el repositorio.
+6. Configura `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD` y
+   `MYSQLDATABASE` con los datos del servicio MySQL que contiene Sakila.
+   También se admite el conjunto `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`
+   y `DB_NAME`. Las variables `MYSQL*` tienen prioridad; no mezcles conjuntos
+   incompletos. El puerto predeterminado es `3306`. Introduce los valores
+   únicamente en Railway; no los guardes en el repositorio.
 7. Inicia un nuevo despliegue y abre los logs de construcción. Debe aparecer
    `Using detected Dockerfile!`. En una construcción sin caché, las
    comprobaciones del Dockerfile deben mostrar:
@@ -48,12 +51,12 @@ El proceso de inicio es `apache2-foreground` y Apache escucha en el puerto 80.
 El Dockerfile está en la raíz, pero confirmar qué versión construye Railway
 requiere revisar el despliegue remoto, su rama y sus logs.
 
-**Limitación de la aplicación existente:** las páginas PHP usan `mysqli` con
-conexiones propias a `localhost` y credenciales escritas en el código. No usan
-`conexion.php`. Este ajuste de Apache no cambia esas páginas ni hace que usen
-las variables `DB_*`. El arranque de Apache y la conexión de esas páginas al
-MySQL remoto son comprobaciones distintas. Las credenciales existentes deben
-retirarse del código y reemplazarse si siguen siendo válidas.
+Todas las páginas cargan `conexion.php` con `require_once` y usan la misma
+variable `$conn` de tipo `mysqli`, conservando sus consultas existentes.
+Si no hay variables `MYSQL*` ni `DB_*`, se carga `conexion.local.php` para
+desarrollo local. Ese archivo devuelve un arreglo con las claves `host`,
+`port`, `user`, `password` y `dbname`. Una configuración de entorno incompleta
+se rechaza en lugar de usar silenciosamente los datos locales.
 
 `conexion.local.php` y `.env` permanecen excluidos mediante `.gitignore` y
 `.dockerignore`.

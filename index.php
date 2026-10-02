@@ -1,18 +1,7 @@
 <?php
-// Configuración de conexión a la base de datos Sakila
-$servername = "localhost";
-$username = "charuser";
-$password = "Usuariochar25@";
-$dbname = "sakila";
-
 try {
     // Crear la conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        throw new Exception("Conexión fallida: " . $conn->connect_error);
-    }
+    require_once __DIR__ . '/conexion.php';
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
 }
