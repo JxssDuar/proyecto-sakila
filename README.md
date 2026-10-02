@@ -18,11 +18,10 @@ El proceso de inicio prepara Apache y lo ejecuta en foreground en el puerto 80.
 5. En **Variables**, configura `PORT=80`. En **Networking**, configura el
    puerto de destino del dominio como `80`.
 6. Configura `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD` y
-   `MYSQLDATABASE` con los datos del servicio MySQL que contiene Sakila.
-   También se admite el conjunto `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`
-   y `DB_NAME`. Las variables `MYSQL*` tienen prioridad; no mezcles conjuntos
-   incompletos. El puerto predeterminado es `3306`. Introduce los valores
-   únicamente en Railway; no los guardes en el repositorio.
+   `MYSQLDATABASE` con los datos del servicio MySQL que contiene Sakila. Si
+   falta alguna variable Railway, la aplicación informa del error de
+   configuración en vez de intentar la conexión local. El puerto predeterminado
+   es `3306`. Introduce los valores únicamente en Railway.
 7. Inicia un nuevo despliegue y abre los logs de construcción. Debe aparecer
    `Using detected Dockerfile!`. En una construcción sin caché, las
    comprobaciones del Dockerfile deben mostrar:

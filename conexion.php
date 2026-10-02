@@ -8,18 +8,8 @@ $railway = [
     'dbname' => getenv('MYSQLDATABASE'),
 ];
 
-$alternative = [
-    'host' => getenv('DB_HOST'),
-    'port' => getenv('DB_PORT'),
-    'user' => getenv('DB_USER'),
-    'password' => getenv('DB_PASSWORD'),
-    'dbname' => getenv('DB_NAME'),
-];
-
 if (count(array_filter($railway, static function ($value) { return $value !== false; })) > 0) {
     $config = $railway;
-} elseif (count(array_filter($alternative, static function ($value) { return $value !== false; })) > 0) {
-    $config = $alternative;
 } else {
     $localFile = __DIR__ . '/conexion.local.php';
     if (!is_file($localFile)) {
