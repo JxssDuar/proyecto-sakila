@@ -105,7 +105,7 @@ try {
     <div class="row">
         <div class="col-md-6">
             <div class="video-player">
-                <img class="img-fluid rounded" src="https://vocal.media/lifehack/is-daredevil-born-again-on-amazon-prime-video" alt="Película">
+                <img class="img-fluid rounded" src="images/Pelicula.png" alt="Película">
                 <a class="play-icon" href="javascript:void(0)">
                     <i class="tf-ion-play" data-video="https://www.youtube.com/embed/DyEKs7lc0kY?autoplay=1"></i>
                 </a>
